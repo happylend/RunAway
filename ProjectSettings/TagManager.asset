@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Grass
+  - Point
+  - Box
+  - Destroy
+  - Fire
+  - Wall
+  - Blow
+  - Stone
+  - Ice
+  - IceBlock
+  - Floor
+  - Ices
+  - IceBlocks
+  - DarkCubes
+  - LightCubes
+  - Cubes
+  - Board
+  - Blows
+  - Water
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - stop
+  - Player
+  - Box
+  - Ice
+  - 
+  - Fire
+  - IceBlock
+  - Floor
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - AirWall
+  - Water
+  - Restart
+  - Grass
+  - Blow
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
