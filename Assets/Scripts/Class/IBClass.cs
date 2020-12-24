@@ -33,7 +33,7 @@ public class IBClass : MonoBehaviour
         foreach (Transform child in father.GetComponentInChildren<Transform>())
         {
             //ice and block all exist
-            if (op%2 == 0)
+            if (op % 2 == 0 && op != 0)
             {
                 break;
             }
