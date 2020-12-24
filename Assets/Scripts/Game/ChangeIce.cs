@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ChangeIce : MonoBehaviour
 {
+    /*
     // Start is called before the first frame update
     public static GameObject Blockfather, Icesfather;
     public static List<GameObject>ices, DarkCubes, LightCubes;
@@ -17,20 +18,17 @@ public class ChangeIce : MonoBehaviour
         EventCenter.GetInstance().AddEventListener("ChangeWorld", Changeice);
 
         //实例化
-       /*
+       
        ices = new List<GameObject>();
        LightCubes = new List<GameObject>();
        DarkCubes = new List<GameObject>();
-        */
+        
         //BlocksPos = IcesPos = new List<Vector3>();
 
     }
 
     // Update is called once per frame
-    void Update()
-    {
 
-    }
     public static void check()
     {
         ices = new List<GameObject>();
@@ -148,11 +146,11 @@ public class ChangeIce : MonoBehaviour
                         Darkcube.name = "DarkCube_Ice";
                         Darkcube.transform.position = child.position;
                         DarkCubes.Add(Darkcube);
-                        /*
+            
                         GameObject Darkcubes = GameObject.FindWithTag("DarkCubes");
                         Darkcube.transform.parent = Darkcubes.transform;
                         Debug.Log("生成暗地面");
-                        */
+       
   
                     }                     
                     else
@@ -161,11 +159,11 @@ public class ChangeIce : MonoBehaviour
                         Lightcube.name = "Cube";
                         Lightcube.transform.position = child.position;
                         LightCubes.Add(Lightcube);
-                        /*
+              
                         GameObject Lightcubes = GameObject.FindWithTag("LightCubes");
                         cube.transform.parent = Lightcubes.transform;
                         Debug.Log("生成明地面");
-                        */
+        
 
                     }
 
@@ -193,7 +191,7 @@ public class ChangeIce : MonoBehaviour
        
         
     }
-    
+
     void Changeice(object key)
     {
         int num = (int)key+1;
@@ -202,7 +200,7 @@ public class ChangeIce : MonoBehaviour
             //进入暗世界
             if (!Map.LW)
             {
-                /*
+
                 if (ices != null)
                 {
                     //Icesfather = GameObject.FindWithTag("Ices");
@@ -214,7 +212,7 @@ public class ChangeIce : MonoBehaviour
                     }
                     //ices.Clear();
                 }
-                */
+
 
                 check();
             }
@@ -222,7 +220,7 @@ public class ChangeIce : MonoBehaviour
             //回到光世界
             else
             {
-                /*
+ 
                 if (ices != null)
                 {
                     //Icesfather = GameObject.FindWithTag("Ices");
@@ -233,7 +231,7 @@ public class ChangeIce : MonoBehaviour
                     }
                    // ices.Clear();
                 }
-                */
+
                 check();
                 
             }
@@ -242,6 +240,6 @@ public class ChangeIce : MonoBehaviour
             return;
         
     }
-    
+    */
    
 }

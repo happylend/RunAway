@@ -22,15 +22,23 @@ public class InputCharacter : MonoBehaviour//已废弃
     public static float WallCheck = 1f;
 
     public static Vector3 change;
-
-
+    //检测人物方向
+    public enum PersonDt
+    {
+        idle,
+        Forward,
+        Back,
+        Left,
+        Rigt
+    };
+    public static PersonDt currentPdt;
     void Awake()
     {
         T = timer;
        
         //开启输入检测
         InputMgr.GetInstance().StartOrEndCheck(true);
-
+  
         //添加事件中心检测
         //EventCenter.GetInstance().AddEventListener("Keydown", CheckInputDown);
         //EventCenter.GetInstance().RomoveEventListener("Keydown", CheckInputDown);
@@ -88,6 +96,7 @@ public class InputCharacter : MonoBehaviour//已废弃
                                     Debug.Log("右移！");
                                     InputCharacter.people.transform.position += new Vector3(Input.GetAxisRaw("Horizontal") * 1.5f, 0f, 0f);
                                     change = new Vector3(1.5f, 0, 0);
+                                    currentPdt = PersonDt.Rigt;                                                                     
                                 }
                                 hit.transform.position = hit.transform.position + change;
                                 getKey = false;
@@ -131,6 +140,7 @@ public class InputCharacter : MonoBehaviour//已废弃
                                     Debug.Log("左移！");
                                     InputCharacter.people.transform.position += new Vector3(Input.GetAxisRaw("Horizontal") * 1.5f, 0f, 0f);
                                     change = new Vector3(-1.5f, 0, 0);
+                                    currentPdt = PersonDt.Left;
                                 }
                                 hit.transform.position = hit.transform.position + change;
                                 getKey = false;
@@ -180,6 +190,7 @@ public class InputCharacter : MonoBehaviour//已废弃
                                     Debug.Log("前进！");
                                     InputCharacter.people.transform.position += new Vector3(0f, 0f, Input.GetAxisRaw("Vertical") * 1.5f);
                                     change = new Vector3(0, 0, 1.5f);
+                                    currentPdt = PersonDt.Forward;
                                 }
                                 hit.transform.position = hit.transform.position + change;
                                 getKey = false;

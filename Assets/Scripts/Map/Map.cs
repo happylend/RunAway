@@ -155,6 +155,7 @@ public class Map : MonoBehaviour
             //雪山关
             if (num == 8 ||num == 9 || num == 10)
             {
+                /*   
                 Darkcubes = GameObject.FindWithTag("DarkCubes");
                 Icesfather = GameObject.FindWithTag("Ices");
                 if(ChangeIce.DarkCubes != null)
@@ -176,6 +177,8 @@ public class Map : MonoBehaviour
                             ice.transform.parent = Icesfather.transform;
                     }
                 }
+                */
+                
             }
             FallCheck.CanFall = true;
             LW = false;                       
@@ -188,8 +191,9 @@ public class Map : MonoBehaviour
             Light_light.gameObject.SetActive(true);
             Dark_light.gameObject.SetActive(false);
             //雪山关
-            if (num == 8 || num == 9)
+            if (num == 8 || num == 9 || num == 10)
             {
+                /*
                 Lightcubes = GameObject.FindWithTag("LightCubes");
                 Icesfather = GameObject.FindWithTag("Ices");
                 foreach (GameObject LightCube in ChangeIce.LightCubes)
@@ -207,6 +211,7 @@ public class Map : MonoBehaviour
                             ice.transform.parent = Icesfather.transform;
                     }
                 }
+                */
             }
             FallCheck.CanFall = true;
             LW = true;
@@ -231,6 +236,7 @@ public class Map : MonoBehaviour
         Destroy(DarkMap[nextnum]);
         Destroy(GameObject.FindGameObjectWithTag("Point"));
         //雪山关
+        /*
         if(nextnum == 7||nextnum == 8)
         {
             Destroy(ChangeIce.Icesfather);
@@ -241,7 +247,7 @@ public class Map : MonoBehaviour
             ChangeIce.ices.Clear();
             
         }
-
+        */
         LightMap[nextnum] = PoolMgr.GetInstance().GetObjAsyc(LightWorld[nextnum], new Vector3(0, 0, 0), Quaternion.identity);
         DoubleMap[nextnum] = PoolMgr.GetInstance().GetObjAsyc(DoubleWorld[nextnum], new Vector3(0, 0, 0), Quaternion.identity);
         num = 0;
@@ -254,6 +260,10 @@ public class Map : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// 吹风机机制
+    /// </summary>
+    /// <param name="key"></param>
     public static void ChangePos(object key)
     {  
         int numcount = (int)key;
@@ -299,6 +309,8 @@ public class Map : MonoBehaviour
         EventCenter.GetInstance().RomoveEventListener("ChangeMap", ChangeMap);
         EventCenter.GetInstance().RomoveEventListener("ChangeWorld", ChangePos);
         EventCenter.GetInstance().RomoveEventListener("ChangeWorld", ChangeWorld);
+        EventCenter.GetInstance().RomoveEventListener("ChangeWorld", IBClass.ChangeChild);
+        //EventCenter.GetInstance().RomoveEventListener("ChangeWorld", ChangeIce.Changeice);
         EventCenter.GetInstance().RomoveEventListener("fail", RestartGame);
         
     }

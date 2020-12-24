@@ -2856,6 +2856,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DarkCube_Ice (32)
       objectReference: {fileID: 0}
+    - target: {fileID: 6780785645346458199, guid: e8dc16b0a3bfd814798ccdecc9694f54,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8dc16b0a3bfd814798ccdecc9694f54, type: 3}
 --- !u!4 &559196737991635528 stripped
