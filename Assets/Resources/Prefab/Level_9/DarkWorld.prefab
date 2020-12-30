@@ -1181,6 +1181,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakIce
       objectReference: {fileID: 0}
+    - target: {fileID: 1584133040574961788, guid: 30d1c123f0e7baf419dca4ecbe95e9e3,
+        type: 3}
+      propertyPath: m_TagString
+      value: BreakIce
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30d1c123f0e7baf419dca4ecbe95e9e3, type: 3}
 --- !u!4 &1988350336171884825 stripped

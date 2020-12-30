@@ -23,6 +23,7 @@ TagManager:
   - Board
   - Blows
   - Water
+  - BreakIce
   layers:
   - Default
   - TransparentFX

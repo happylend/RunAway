@@ -235,8 +235,10 @@ public class Map : MonoBehaviour
         {
             Destroy(ChangeIce.Icesfather);
             Destroy(ChangeIce.Blockfather);
-            
+
+
             ChangeIce.DarkCubes.Clear();
+
             ChangeIce.LightCubes.Clear();
             ChangeIce.ices.Clear();
             

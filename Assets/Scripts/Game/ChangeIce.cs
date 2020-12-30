@@ -5,7 +5,10 @@ public class ChangeIce : MonoBehaviour
 {
     // Start is called before the first frame update
     public static GameObject Blockfather, Icesfather;
-    public static List<GameObject>ices, DarkCubes, LightCubes;
+    public static List<GameObject> DarkCubes = new List<GameObject>();
+    public static List<GameObject> ices = new List<GameObject>();
+    public static List<GameObject> LightCubes = new List<GameObject>();
+    
     public LayerMask floor;
     public List<Vector3> IcesPos, BlocksPos;
     //public static bool checkover = 
