@@ -5,16 +5,19 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
+    second: Drop
+  - first:
+      74: -5405653242291790180
+    second: Take 001 (1)
+  - first:
+      74: -998496362607748373
+    second: Take 001
+  - first:
+      74: -1250308563666316836
     second: Push
   - first:
       74: 4821609917503249430
     second: Win
-  - first:
-      74: 9112710405551251116
-    second: Drop
-  - first:
-      74: -3100369314251171874
-    second: Idle
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -48,7 +51,7 @@ ModelImporter:
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 25
+      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -100,13 +103,13 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 1
     - serializedVersion: 16
       name: Drop
       takeName: Take 001
       internalID: 0
-      firstFrame: 49
-      lastFrame: 74
+      firstFrame: 50
+      lastFrame: 79
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -114,7 +117,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -129,36 +132,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0.96
-    - serializedVersion: 16
-      name: Idle
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 75
-      lastFrame: 97
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 1
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -200,7 +174,42 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: all(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_01:pSphere1
+      parentName: all(Clone)
+      position: {x: 0.00023980375, y: 0.0065723285, z: 1.117587e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_01:pCylinder1
+      parentName: all(Clone)
+      position: {x: -0.00041533302, y: 0.0024591757, z: 0.000053703767}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_01:pCylinder3
+      parentName: all(Clone)
+      position: {x: -0.00032589742, y: 0.0017192895, z: -0.0016779106}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_01:pCylinder4
+      parentName: all(Clone)
+      position: {x: -0.00032589742, y: 0.0017192895, z: 0.0016223289}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_01:pCylinder5
+      parentName: all(Clone)
+      position: {x: 0.00003143608, y: 0.0048968378, z: -0.00034174972}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: character_01:pCylinder6
+      parentName: all(Clone)
+      position: {x: -0.0006406131, y: 0.005886714, z: 0.0020476875}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -208,7 +217,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 30
+    globalScale: 0.29999998
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
