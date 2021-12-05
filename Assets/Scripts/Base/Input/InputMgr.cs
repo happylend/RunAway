@@ -35,12 +35,19 @@ public class InputMgr :BaseManager<InputMgr>
     /// <param name="key"></param>
     private void CheckKeyCode(string key)
     {
+        /*
         if(key.Contains("Horizontal") || key.Contains("Vertical"))
         {
             if (Mathf.Abs(Input.GetAxisRaw(key)) != 0)
                 //事件中心模块 分发按键事件
                 EventCenter.GetInstance().EventTrigger("Keydown", key);
-        }           
+        } 
+        */
+        if(key.Contains("W"))
+        {
+            if (Mathf.Abs(Input.GetAxisRaw(key)) != 0)
+                EventCenter.GetInstance().EventTrigger("Keydown", key);
+        }
     }
     private void CheckKeyCodeUp(KeyCode key)
     {

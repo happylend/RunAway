@@ -30,11 +30,14 @@ public class PlayerControl : MonoBehaviour
     private static Vector3 Movechange;//人物移动量
 
     private RaycastHit Icehit;
-
+    public static TreasureBox treasure;
 
     public static Dir direction;
     public static Dir BoxDir;
 
+
+    public static bool CanMove;
+    public static Vector3 DIR;
     public enum Dir
     {
         idle,
@@ -46,14 +49,16 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+       
         T = timer;
         //开启输入检测
         InputMgr.GetInstance().StartOrEndCheck(true);
 
         //添加事件中心检测
-       EventCenter.GetInstance().AddEventListener("Keydown", CheckInputDown);
+        EventCenter.GetInstance().AddEventListener("Keydown", CheckInputDown);
+        EventCenter.GetInstance().AddEventListener("StateKeydown", CheckKey);
         people = this.gameObject;
-
+        
         Movechange = this.transform.position;
         Movechange.y = 1;
         this.transform.position = Movechange;
@@ -76,6 +81,7 @@ public class PlayerControl : MonoBehaviour
             getKey = true;
             T = timer;
         }
+
         GerDirection();
         PlayerMoveRot();
         /*
@@ -86,6 +92,48 @@ public class PlayerControl : MonoBehaviour
         }
         */
     }
+    
+
+    public static void CheckKey(object key)
+    {
+        if(getKey)
+        {
+            
+            switch(key)
+            {
+                case KeyCode.W:
+                    DIR = Vector3.forward;
+                        break;
+                case KeyCode.A:
+                    DIR = Vector3.left;
+                    break;
+                case KeyCode.S:
+                    DIR = Vector3.back;
+                    break;
+                case KeyCode.D:
+                    DIR = Vector3.right;
+                    break;
+            }
+
+        }
+    }
+
+    public static void Move(Vector3 dir)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(people.transform.position, dir, out hit, WallCheck, IgnoreAirWall))
+        {
+            //人物移动
+            box = hit.transform.gameObject;
+            if (hit.transform.tag == "Treasure")
+            {
+                treasure = new TreasureBox(box);
+                CanMove = treasure.CanMove(dir);
+            }
+
+        }
+    }
+
 
     public static void CheckInputDown(object key)
     {
