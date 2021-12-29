@@ -20,9 +20,10 @@ TagManager:
   - DarkCubes
   - LightCubes
   - Cubes
-  - Board
-  - Blows
   - Water
+  - Flag
+  - ChangeWorld
+  - Board
   layers:
   - Default
   - TransparentFX

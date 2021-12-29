@@ -24,7 +24,7 @@ public class DropWater : MonoBehaviour
             other.gameObject.tag == "Fire"|| other.gameObject.tag == "Blow"||
             other.gameObject.tag == "Stone"|| other.gameObject.tag == "Player")
         {
-            AnimControl.Drop();
+            //AnimControl.Drop();
             EventCenter.GetInstance().EventTrigger("DropWater", key);
         }
 

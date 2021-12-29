@@ -44,7 +44,7 @@ public abstract class FSMController<T> : MonoBehaviour
 
     /// <summary>
     /// 获取状态对象
-    /// 你给我一个枚举，我返回一个和这个枚举同名的类型的对象
+    /// 
     /// 保证不会返回null
     /// where 表示约束泛型
     /// </summary>
@@ -61,13 +61,13 @@ public abstract class FSMController<T> : MonoBehaviour
         state.Init(this,stateType);//初始化
 
         stateDic.Add(stateType, state);
-        Debug.Log("加入了" + state.ToString() + "状态");
         return state;
     }
 
     protected virtual void Update()
     {
         if (CurrStateObj != null) CurrStateObj.OnUpdate();
+        
         //Debug.Log("更新");
     }
 }

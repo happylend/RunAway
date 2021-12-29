@@ -19,7 +19,7 @@ public abstract class StateBase<T>
     /// <param name="StateType"></param>
     public virtual void Init(FSMController<T> controller,T StateType)
     { 
-        this.StateType = StateType;
+        this.StateType = StateType; 
     }
 
 

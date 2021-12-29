@@ -31,7 +31,7 @@ public class Restart : MonoBehaviour
         if(other.gameObject.tag=="Player"||other.gameObject.tag=="Box")
         {
             print(1);
-            AnimControl.Init();
+            //AnimControl.Init();
             EventCenter.GetInstance().EventTrigger("RestartGame", key);
 
         }
@@ -40,8 +40,5 @@ public class Restart : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
-    void OpenInput()
-    {
-        EventCenter.GetInstance().AddEventListener("Keydown", PlayerControl.CheckInputDown);
-    }
+
 }

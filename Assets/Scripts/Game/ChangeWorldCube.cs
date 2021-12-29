@@ -10,7 +10,7 @@ public class ChangeWorldCube : MonoBehaviour
     [Header("===第一关为0===")]
     public int key ;
 
-    public static bool ChangeMapActive = false;
+    //public static bool ChangeMapActive = false;
     
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class ChangeWorldCube : MonoBehaviour
     {
 
     }
-
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         if (InputMgr.isStart == true)
@@ -44,6 +44,6 @@ public class ChangeWorldCube : MonoBehaviour
                 EventCenter.GetInstance().EventTrigger("ChangeWorld", key);
             }
         }
-
     }
+    */
 }

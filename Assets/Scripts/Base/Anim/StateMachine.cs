@@ -5,7 +5,7 @@ using UnityEngine;
 public class StateMachine 
 {
     // Start is called before the first frame update
-    
+    /*
     //变量的封装
     public IChState CurrentState
     {
@@ -27,5 +27,6 @@ public class StateMachine
         //进入新的状态
         NewState.Enter();
     }
+    */
 
 }

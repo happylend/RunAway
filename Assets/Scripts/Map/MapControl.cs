@@ -21,7 +21,7 @@ public class MapControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Menu.active == false)
+        if (Menu.activeSelf == false)
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -34,6 +34,7 @@ public class MapControl : MonoBehaviour
             Menu.SetActive(true);
             Success = false;
         }
+        
     }
 
     public void openSetting()
