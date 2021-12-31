@@ -19,7 +19,7 @@ public class Player_Move : StateBase<PlayerState>
 
   
 
-    private float moveSpeed = 5f;
+    private float moveSpeed = 4f;
     private GameObject _Box;
     private GameObject Box { get => _Box; set => _Box = value; }
 

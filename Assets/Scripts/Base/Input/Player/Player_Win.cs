@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player_Win : StateBase<PlayerState>
 {
     public Player_Controller Player;
-    
+
     public GameObject Box { get; set; }
 
 

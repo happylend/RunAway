@@ -34,7 +34,7 @@ public class Player_Fall : StateBase<PlayerState>
         //重置关卡
 
         //回到移动状态
-        Player.ChangeState<Player_Move>(PlayerState.Player_Move);
+        //Player.ChangeState<Player_Move>(PlayerState.Player_Move);
     }
 
 }

@@ -4,24 +4,45 @@ using UnityEngine;
 
 public class Blower : BoxFather
 {
+    public Vector3 BlowerDir;
     // Start is called before the first frame update
     private void Awake()
     {
-      
-        Init(BoxType.Blower,this.gameObject);
+
+        Init(BoxType.Blower, this.gameObject);
     }
     private void Update()
     {
-        NewMove(Player_Controller.Ignorelayer);
+        this.NewMove(Player_Controller.Ignorelayer);
         if (!Map.LW)
         {
             this.transform.eulerAngles = new Vector3(0, 180f, 0);
+            if (Physics.Raycast(this.transform.position, Vector3.left, out RaycastHit hit, 1.2f))
+            {
+                if (hit.transform.tag == "Player")
+                {
+                    Player_Controller.BlowDir = Vector3.left;
+                    Player_Controller.CanBlow = true;
+                }
+            }
         }
         else
         {
-            this.transform.eulerAngles = new Vector3(0, 0, 0);
-        } 
-        
+            this.transform.eulerAngles = BlowerDir;
+            if (Physics.Raycast(this.transform.position, Vector3.right, out RaycastHit hit, 1.2f))
+            {
+                if (hit.transform.tag == "Player")
+                {
+                    Player_Controller.BlowDir = Vector3.right;
+                    Player_Controller.CanBlow = true;
+                }
+            }
+        }
+
+    }
+    private void FixedUpdate()
+    {
+
     }
     private void LateUpdate()
     {
