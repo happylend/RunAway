@@ -11,25 +11,9 @@ public class ChangeWorldCube : MonoBehaviour
     public int key ;
 
     //public static bool ChangeMapActive = false;
-    
-    private void Awake()
-    {
-
-        
-    }
-
-    void Start()
-    {
-        // LightMap = Map.LightMap[1];
-        //  DarkMap = Map.DarkMap[1];
-
-    }
 
     // Update is called once per frame
-    void Update()
-    {
 
-    }
     /*
     private void OnCollisionEnter(Collision collision)
     {

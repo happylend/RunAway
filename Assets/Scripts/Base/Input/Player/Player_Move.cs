@@ -43,7 +43,6 @@ public class Player_Move : StateBase<PlayerState>
             Box = new GameObject();
             Box.name = "BoxName";
         }
-
     }
 
     // Start is called before the first frame update
@@ -222,8 +221,9 @@ public class Player_Move : StateBase<PlayerState>
         {
             StopInput = true;
 
-            if (Player.transform.position == Player.MovePoint.position)
+            if (Vector3.Distance(Player.transform.position, Player.MovePoint.position) < 0.15f)
             {
+                Player.transform.position = Player.MovePoint.position;
                 GameObject.Destroy(GameObject.FindWithTag("Point"));
                 Player.ChangeState<Player_Fall>(PlayerState.Player_Fall);
 
@@ -255,8 +255,12 @@ public class Player_Move : StateBase<PlayerState>
         if(CanChangeWorld())
         {
             Player_Controller.CanFall  = Player_Controller.CanBlow = false;
-            if (Player.transform.position == Player.MovePoint.position) 
+            if (Vector3.Distance(Player.transform.position, Player.MovePoint.position) < 0.15f)
+            {
+                Player.transform.position = Player.MovePoint.position;
                 Player.ChangeState<Player_ChangeWorld>(PlayerState.Player_ChangeWorld);
+            }
+
         }
     }
 
