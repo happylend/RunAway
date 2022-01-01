@@ -9,6 +9,8 @@ public class Player_Input
     public float Horizontal { get => Input.GetAxisRaw("Horizontal"); }
     public float Vertical { get => Input.GetAxisRaw("Vertical"); } 
 
+  
+
     /// <summary>
     /// 判断是否长按按下按键
     /// </summary>

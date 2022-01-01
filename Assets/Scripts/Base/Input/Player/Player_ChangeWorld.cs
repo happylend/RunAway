@@ -18,12 +18,16 @@ public class Player_ChangeWorld : StateBase<PlayerState>
         //Player_Controller.ChangeMapActive = true;
         //检测世界转换
         EventCenter.GetInstance().EventTrigger("ChangeWorld", MapNum.Start_Num);
-        if(Map.MapComplete)
-            Player.ChangeState<Player_Move>(PlayerState.Player_Move);
-
-
     }
 
-    public override void OnExit(){ }
-    public override void OnUpdate(){ }
+    public override void OnExit(){
+    
+    }
+    public override void OnUpdate(){
+        if (Map.MapComplete)  
+        {
+            if(Player.input.Horizontal == 0 && Player.input.Vertical == 0)
+                Player.ChangeState<Player_Move>(PlayerState.Player_Move);
+        }
+    }
 }

@@ -118,15 +118,14 @@ public class Player_Move : StateBase<PlayerState>
 
             //如果是箱子
             else
-            {
-                
+            {            
                 //获得箱子
                 Box = boxhit.transform.gameObject;
                 if(Box.TryGetComponent<Treasure>(out Treasure treasure)) BoxLayer = Player_Controller.IgnoreAirWall;
                 else BoxLayer = Player_Controller.Ignorelayer;
 
                 //箱子前面没有东西
-                if (!Physics.Raycast(Box.transform.position, new Vector3(h, 0, v), 1f, BoxLayer))
+                if (!Physics.Raycast(Box.transform.position, new Vector3(h, 0, v), 0.7f, BoxLayer))
                 {
                     return true;
                 }
@@ -142,8 +141,8 @@ public class Player_Move : StateBase<PlayerState>
     private void Move()
     {
         //Debug.Log("开始调用移动");
-        if (CanMove(Player.input.Horizontal, Player.input.Vertical, Player))
-        {
+        //if (CanMove(Player.input.Horizontal, Player.input.Vertical, Player))
+        //{
             float h, v;
             Player.transform.position = Vector3.MoveTowards(Player.transform.position, Player.MovePoint.position, moveSpeed * Time.deltaTime);
 
@@ -163,13 +162,15 @@ public class Player_Move : StateBase<PlayerState>
                     //转向
                     Player.transform.eulerAngles = new Vector3(0, h * 90f, 0);
                     //移动
-                    Player.MovePoint.position += new Vector3(h, 0f, 0f);
-                    Player.MovePoint.position = Player_Controller.RoundV(Player.MovePoint.position);
+                    if (CanMove(Player.input.Horizontal, Player.input.Vertical, Player))
+                    {
+                        Player.MovePoint.position += new Vector3(h, 0f, 0f);
+                        Player.MovePoint.position = Player_Controller.RoundV(Player.MovePoint.position);
+                        //同步模型动画
+                        //Player.model.UpdateMovePar(h, v);
+                    }
 
-
-                    //同步模型动画
-                    //Player.model.UpdateMovePar(h, v);
-                }
+                }   
                 if (Mathf.Abs(v) == 1f)
                 {
                     //转向
@@ -182,11 +183,13 @@ public class Player_Move : StateBase<PlayerState>
                     {
                         dir = Dir.back;
                         Player.transform.eulerAngles = new Vector3(0, 180, 0);
-                    }          
-                    //移动
-                    Player.MovePoint.position += new Vector3(0f, 0f, v);
-                    Player.MovePoint.position = Player_Controller.RoundV(Player.MovePoint.position);
-
+                    }
+                    if (CanMove(Player.input.Horizontal, Player.input.Vertical, Player))
+                    {
+                        //移动
+                        Player.MovePoint.position += new Vector3(0f, 0f, v);
+                        Player.MovePoint.position = Player_Controller.RoundV(Player.MovePoint.position);
+                    }
                     //同步模型动画
                     // Player.model.UpdateMovePar(h, v);
                 }
@@ -199,12 +202,9 @@ public class Player_Move : StateBase<PlayerState>
                     }
                 }
             }
-        }
+        //}
         
     }
-    /// <summary>
-    /// 人物下落
-    /// </summary>
    
     /// <summary>
     /// 下落监测
@@ -215,6 +215,10 @@ public class Player_Move : StateBase<PlayerState>
         if (!Physics.Raycast(Player.transform.position, new Vector3(0, -1f, 0), CheckLen, Player_Controller.RestartLayer)) return true;
         else return false;
     }
+    
+    /// <summary>
+    /// 下落函数
+    /// </summary>
     private void Fall()
     {
         if (CanFall())
@@ -247,6 +251,7 @@ public class Player_Move : StateBase<PlayerState>
         }
         else return false;
     }
+
     /// <summary>
     /// 转换世界
     /// </summary>
@@ -264,7 +269,9 @@ public class Player_Move : StateBase<PlayerState>
         }
     }
 
-
+    /// <summary>
+    /// 吹风机
+    /// </summary>
     private void Blow()
     {    
         if(Player_Controller.CanBlow)
@@ -278,14 +285,7 @@ public class Player_Move : StateBase<PlayerState>
                 Debug.Log("进入吹风状态");
                 Player.ChangeState<Player_Blow>(PlayerState.Player_Blow);
             }
-        }
-
-
-
-
-
-        
-
+        }     
     }
 
 }

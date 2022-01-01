@@ -22,7 +22,7 @@ public class Player_Blow : StateBase<PlayerState>
         RaycastHit hit;
         if (Physics.Raycast(player.Tran(), Player_Controller.BlowDir, out hit, 10f, Player_Controller.IgnoreAirWall))
         {
-            TargetPos = hit.transform.position -= Player_Controller.BlowDir;
+            TargetPos = hit.transform.position - Player_Controller.BlowDir;
             Debug.Log("飞行目标是" + TargetPos);
         }
         else if (Physics.Raycast(player.Tran(), Player_Controller.BlowDir, out hit, 10f))
