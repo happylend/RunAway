@@ -5,7 +5,7 @@ using UnityEngine;
 public class DropWater : MonoBehaviour
 {
     public int key = 1;
-    bool first = true;
+    //bool first = true;
     
     // Start is called before the first frame update
     void Start()

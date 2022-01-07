@@ -15,8 +15,6 @@ TagManager:
   - Ice
   - IceBlock
   - Floor
-  - Ices
-  - IceBlocks
   - DarkCubes
   - LightCubes
   - Cubes
@@ -24,6 +22,9 @@ TagManager:
   - Flag
   - ChangeWorld
   - Board
+  - Blows
+  - IceBlocks
+  - breakIce
   layers:
   - Default
   - TransparentFX

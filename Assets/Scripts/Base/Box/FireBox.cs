@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class FireBox:BoxFather
 {
+
     private void Awake()
     {
 
-        Init(BoxType.FireBox,this.gameObject);
+        Init(BoxType.FireBox, gameObject);
 
     }
     private void Update()
     {
-        NewMove(Player_Controller.ignoreGrass);
+        NewMove(Player_Controller.IgnoreGrass);
         DecGrass();
     }
 

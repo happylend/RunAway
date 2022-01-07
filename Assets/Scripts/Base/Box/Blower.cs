@@ -5,6 +5,9 @@ using UnityEngine;
 public class Blower : BoxFather
 {
     public Vector3 BlowerDir;
+
+
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -13,7 +16,7 @@ public class Blower : BoxFather
     }
     private void Update()
     {
-        this.NewMove(Player_Controller.Ignorelayer);
+        this.NewMove(Player_Controller.RestartLayer);
         if (!Map.LW)
         {
             this.transform.eulerAngles = new Vector3(0, 180f, 0);

@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 6414945959384859428}
   - component: {fileID: 5410967729545216684}
   - component: {fileID: 2950738686478923882}
-  - component: {fileID: 7134805922502786922}
+  - component: {fileID: 4741534716393317067}
   m_Layer: 15
   m_Name: IceBlock
-  m_TagString: IceBlock
+  m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,7 +112,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &7134805922502786922
+--- !u!114 &4741534716393317067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,10 +121,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 657923722418217490}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae505096002640b4a97c079be9f061b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b40f9f949a49ef4289d717076c3adb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkWall: 1
+  CanMove: 1
+  Box: {fileID: 0}
+  BoxLayer: 0
+  LightCubeF: {fileID: 0}
+  IceBlockF: {fileID: 0}
+  DarkCubeF: {fileID: 0}
+  IceF: {fileID: 0}
+  TargetPos: {x: 0, y: 0, z: 0}
+  DeDir: {x: 0, y: 0, z: 0}
+  Target: {x: 0, y: 0, z: 0}
+  BaseDir: []
+  CanSkate: 0
+  Isfall: 0
+  Boxtype: 4
+  CanChange: 0
 --- !u!1001 &8335464151330427393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -145,6 +159,22 @@ PrefabInstance:
       value: snowball
       objectReference: {fileID: 0}
     - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -155,6 +185,10 @@ PrefabInstance:
     - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -169,14 +203,6 @@ PrefabInstance:
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -187,18 +213,6 @@ PrefabInstance:
     - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4392085384475284, guid: ac312c5699fba224caa77c756fc57b2c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 205939170688510522, guid: ac312c5699fba224caa77c756fc57b2c,
         type: 3}

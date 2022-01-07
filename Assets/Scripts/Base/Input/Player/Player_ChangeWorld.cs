@@ -15,7 +15,6 @@ public class Player_ChangeWorld : StateBase<PlayerState>
     public override void OnEnter()
     {
         Map.MapComplete = false;
-        //Player_Controller.ChangeMapActive = true;
         //检测世界转换
         EventCenter.GetInstance().EventTrigger("ChangeWorld", MapNum.Start_Num);
     }
@@ -26,7 +25,7 @@ public class Player_ChangeWorld : StateBase<PlayerState>
     public override void OnUpdate(){
         if (Map.MapComplete)  
         {
-            if(Player.input.Horizontal == 0 && Player.input.Vertical == 0)
+            if (Player.input.Horizontal == 0 && Player.input.Vertical == 0)
                 Player.ChangeState<Player_Move>(PlayerState.Player_Move);
         }
     }

@@ -28,10 +28,12 @@ public class Restart : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         print(0);
-        if(other.gameObject.tag=="Player"||other.gameObject.tag=="Box")
+        if(other.gameObject.tag=="Player")
         {
             print(1);
             //AnimControl.Init();
+
+            
             EventCenter.GetInstance().EventTrigger("RestartGame", key);
 
         }

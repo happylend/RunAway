@@ -19,10 +19,9 @@ public class Player_Move : StateBase<PlayerState>
 
   
 
-    private float moveSpeed = 4f;
-    private GameObject _Box;
-    private GameObject Box { get => _Box; set => _Box = value; }
+    private float moveSpeed = 3f;
 
+    private GameObject Box;
     private int BoxLayer = Player_Controller.Ignorelayer;
 
     private float CheckLen = 1f;
@@ -38,18 +37,13 @@ public class Player_Move : StateBase<PlayerState>
         base.Init(controller, StateType);
         //Player是Player_Controller的基类
         Player = controller as Player_Controller;
-        if (Box is null)
-        {
-            Box = new GameObject();
-            Box.name = "BoxName";
-        }
     }
 
     // Start is called before the first frame update
     public override void OnEnter() 
     {
         Player_Controller.CanFall = Player_Controller.CanMove = Player_Controller.CanChangeWorld = true;
-        
+        Player_Controller.CanSkate = false;
         StopInput = false;
 
     }
@@ -74,10 +68,11 @@ public class Player_Move : StateBase<PlayerState>
                 Player.ChangeState<Player_Win>(PlayerState.Player_Win);
             }
         }
+        //监测滑冰
+        if (CanSkate()) Skate();
+        
         //检测是否能飞走
         Blow();
-
-
         //检测切换世界
         if (Player_Controller.CanChangeWorld) ChangeWorld();
 
@@ -85,14 +80,7 @@ public class Player_Move : StateBase<PlayerState>
         if (Player_Controller.CanFall) Fall();
         
         //移动
-        if (Player_Controller.CanMove) Move();          
-
-
-
-
-        //如果胜利
-
-
+        if (Player_Controller.CanMove) Move();
     }
     /// <summary>
     /// 判断r人物是否可以移动
@@ -107,7 +95,7 @@ public class Player_Move : StateBase<PlayerState>
 
 
         //检测到前面有物品
-        if(Physics.Raycast(Player.transform.position, new Vector3(h, 0, v),out RaycastHit boxhit, 1f,Player_Controller.Ignorelayer))
+        if(Physics.Raycast(Player.transform.position, new Vector3(h, 0, v),out RaycastHit boxhit, 1f, Player_Controller.Ignorelayer))
         {
             //如果不是箱子
             if(boxhit.transform.tag != "Box")
@@ -121,8 +109,8 @@ public class Player_Move : StateBase<PlayerState>
             {            
                 //获得箱子
                 Box = boxhit.transform.gameObject;
-                if(Box.TryGetComponent<Treasure>(out Treasure treasure)) BoxLayer = Player_Controller.IgnoreAirWall;
-                else BoxLayer = Player_Controller.Ignorelayer;
+                if(Box.TryGetComponent<Treasure>(out Treasure treasure)) BoxLayer = Player_Controller.RestartLayer;
+                else BoxLayer = Player_Controller.RestartLayer;
 
                 //箱子前面没有东西
                 if (!Physics.Raycast(Box.transform.position, new Vector3(h, 0, v), 0.7f, BoxLayer))
@@ -155,6 +143,15 @@ public class Player_Move : StateBase<PlayerState>
 
             if(Vector3.Distance(Player.transform.position, Player.MovePoint.position)<=.006f)
             {
+                if(Mathf.Abs(h) == 1f && Mathf.Abs(v) == 1)
+                {
+                    var a = new System.Random();
+                    int Rn = a.Next(0, 2);
+                    Debug.Log("随机数是" + Rn);
+                    if (Rn == 0) h = 0;
+                    else v = 0;
+    
+                }
                 if (Mathf.Abs(h) == 1f)
                 {
                     if (h > 0) dir = Dir.right;
@@ -263,6 +260,7 @@ public class Player_Move : StateBase<PlayerState>
             if (Vector3.Distance(Player.transform.position, Player.MovePoint.position) < 0.15f)
             {
                 Player.transform.position = Player.MovePoint.position;
+                //
                 Player.ChangeState<Player_ChangeWorld>(PlayerState.Player_ChangeWorld);
             }
 
@@ -286,6 +284,42 @@ public class Player_Move : StateBase<PlayerState>
                 Player.ChangeState<Player_Blow>(PlayerState.Player_Blow);
             }
         }     
+    }
+
+    /// <summary>
+    /// 判断能够滑冰
+    /// </summary>
+    /// <returns></returns>
+    private bool CanSkate()
+    {
+        if (Player_Controller.CanSkate)
+        {
+            if (Physics.Raycast(Player.Tran(), Player_Controller.GetDir(dir), 0.6f))
+            {
+                Player_Controller.CanSkate = false;
+                return false;
+            }
+            else
+            {
+                if (Vector3.Distance(Player.transform.position, Player.MovePoint.position) < 0.15)
+                {
+                    Player.transform.position = Player.MovePoint.position;
+                    return true;
+
+                }
+                else return false;
+            }
+        } 
+        else return false;
+    }
+
+    private void Skate()
+    {
+        Player_Controller.CanChangeWorld = false;
+        //StopInput = true;
+        Player_Controller.CanMove = false;
+        Debug.Log("进入溜冰状态");
+        Player.ChangeState<Player_Skate>(PlayerState.Player_Skate);
     }
 
 }

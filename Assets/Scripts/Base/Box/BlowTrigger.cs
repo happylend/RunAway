@@ -10,7 +10,7 @@ public class BlowTrigger : MonoBehaviour
     public Blower blower;
     private void Awake()
     {
-        blower = new Blower();
+        //blower = new Blower();
     }
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)

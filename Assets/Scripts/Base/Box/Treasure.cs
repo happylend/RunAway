@@ -6,16 +6,25 @@ public class Treasure:BoxFather
 {
     public static int RestartLayer = ~(1 << 29 | 1 << 28);//忽略重启区域
     public static bool Iswin = false;
+
+
     //public Transform MovePoint;
     private void Awake()
     {
-        Init(BoxType.Treasure, this.gameObject);
+        Init(BoxType.Treasure, gameObject);
+        
     }
 
     private void Update()
     {
         //this.Move(this.gameObject, Player_Controller.Ignorelayer);
-        NewMove(Player_Controller.IgnoreAirWall);
+
+        NewMove(Player_Controller.RestartLayer);
+
+        //滑冰
+        if (canSkate()) SkateInit();
+        SkateMove();     
+        
         IsWin();
 
     }
@@ -34,8 +43,6 @@ public class Treasure:BoxFather
                 Iswin = true;
                 WinBox();
             } 
-
-
         }
     }
 

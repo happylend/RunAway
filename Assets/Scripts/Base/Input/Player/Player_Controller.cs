@@ -17,8 +17,9 @@ public enum PlayerState
     //切换世界
     Player_ChangeWorld,
     //吹风机
-    Player_Blow
-
+    Player_Blow,
+    //滑冰
+    Player_Skate
 }
 
 public class Player_Controller : FSMController<PlayerState>
@@ -26,10 +27,15 @@ public class Player_Controller : FSMController<PlayerState>
 
     public static int Ignorelayer = ~(1 << 30 | 1 << 27);//忽视藤蔓
     public static int IgnoreAirWall = ~(1 << 27);
-    public static int ignoreGrass = ~(1 << 30);
+    public static int IgnoreGrass = ~(1 << 30);
+    public static int IgnoreIceAir = ~(1 << 11| 1 << 27);//忽略冰和空气墙
+    public static int IgnoreIce = ~(1 << 11 );//忽略冰
     public static int RestartLayer = ~(1 << 29 | 1 << 28);//忽略重启区域
+    public static int IceLayer = (1 << 11);//忽略冰
+
+
     //public static bool ChangeMapActive = false;
-    public static bool CanBlow, CanMove, CanChangeWorld, CanFall;
+    public static bool CanBlow, CanMove, CanChangeWorld, CanFall, CanSkate;
 
     public static Vector3 BlowDir;
 
@@ -39,6 +45,7 @@ public class Player_Controller : FSMController<PlayerState>
     public static bool Win;
 
     public CharacterController characterController { get; private set; }
+
 
     public Player_Model model{ get; private set; }
 
@@ -57,10 +64,9 @@ public class Player_Controller : FSMController<PlayerState>
         Win = false;
 
         CanMove = CanChangeWorld = CanFall = true;
-        //characterController = GetComponent<CharacterController>();
         //默认是移动状态
         ChangeState<Player_Move>(PlayerState.Player_Move);
-        //Debug.Log(input.Horizontal);
+
     }
 
     /// <summary>
@@ -79,9 +85,48 @@ public class Player_Controller : FSMController<PlayerState>
         return new Vector3(Round(vector.x), Round(vector.y), Round(vector.z));
     }
 
+    /// <summary>
+    /// 位置
+    /// </summary>
+    /// <returns></returns>
     public Vector3 Tran()
     {
         return this.transform.position;
     }
+
+    /// <summary>
+    /// 获得坐标
+    /// </summary>
+    /// <param name="dir"></param>
+    /// <returns></returns>
+    public static Vector3 GetDir(Dir dir)
+    {
+        Vector3 vector;
+        switch (dir)
+        {
+            case Dir.idle:
+                vector = Vector3.zero;
+                break;
+            case Dir.forward:
+                vector = Vector3.forward;
+                break;
+            case Dir.back:
+                vector = Vector3.back;
+                break;
+            case Dir.left:
+                vector = Vector3.left;
+                break;
+            case Dir.right:
+                vector = Vector3.right;
+                break;
+            default:
+                vector = Vector3.zero;
+                break;
+        }
+        return vector;
+
+    }
+
+    
 
 }

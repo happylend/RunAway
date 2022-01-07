@@ -55,17 +55,19 @@ public class Map : MonoBehaviour
         Debug.Log("加载了第" + MapNum.Start_Num + "关");
 
         EventCenter.GetInstance().AddEventListener("InitMap", InitWorld);
-
+        
 
         EventCenter.GetInstance().AddEventListener("RestartGame", RestartGame);
         //添加事件中心检测
         EventCenter.GetInstance().AddEventListener("ChangeMap", ChangeMap);
 
-
+        
 
         EventCenter.GetInstance().AddEventListener("ChangeWorld", ChangeWorld);
 
         EventCenter.GetInstance().AddEventListener("fail", RestartGame);
+
+
 
         //增加事件中心触发
         EventCenter.GetInstance().EventTrigger("InitMap", MapNum.Start_Num);
@@ -78,14 +80,29 @@ public class Map : MonoBehaviour
         //初始值是0
         Debug.Log("加载成功" + MapNum);
         //Debug.Log(");
-        
 
+        var BlockTran = GameObject.FindObjectsOfType<IceBlock>();
+        foreach (var item in BlockTran)
+        {
+            EventCenter.GetInstance().RomoveEventListener("BChangeI", item.BChangeI);
+            Debug.Log("清除了监听");
+        }
+        var IceTran = GameObject.FindObjectsOfType<Ice>();
+        foreach (var item in IceTran)
+        {
+            EventCenter.GetInstance().RomoveEventListener("IChangeB", item.IChangeB);
+            Debug.Log("清除了监听");
+        }
         LightMap[MapNum] = PoolMgr.GetInstance().GetObjAsyc(LightWorld[MapNum], new Vector3(0, 0, 0), Quaternion.identity);
         DoubleMap[MapNum] = PoolMgr.GetInstance().GetObjAsyc(DoubleWorld[MapNum], new Vector3(0, 0, 0), Quaternion.identity);
 
         //重置胜利
         Treasure.Iswin = false;
 
+        
+
+
+        
         //异步加载
         PoolMgr.GetInstance().GetObj(DarkWorld[MapNum], new Vector3(0, 0, 0), Quaternion.identity, (obj) =>
         {
@@ -112,7 +129,21 @@ public class Map : MonoBehaviour
         Destroy(DoubleMap[nextnum - 1]);
         Destroy(DarkMap[nextnum - 1]);
         Destroy(GameObject.FindGameObjectWithTag("Point"));
-
+        if(nextnum-1 == 7 || nextnum-1 == 8)
+        {
+            var BlockTran = GameObject.FindObjectsOfType<IceBlock>();
+            foreach (var item in BlockTran)
+            {
+                EventCenter.GetInstance().RomoveEventListener("BChangeI", item.BChangeI);
+                Debug.Log("清除了监听");
+            }
+            var IceTran = GameObject.FindObjectsOfType<Ice>();
+            foreach (var item in IceTran)
+            {
+                EventCenter.GetInstance().RomoveEventListener("IChangeB", item.IChangeB);
+                Debug.Log("清除了监听");
+            }
+        }
         //重置胜利
         Treasure.Iswin = false;
 
@@ -138,6 +169,7 @@ public class Map : MonoBehaviour
     {
         int num = (int)key;
         MapNum.Start_Num = num;
+        EventCenter.GetInstance().EventTrigger("BChangeI", MapNum.Start_Num);
         if (LW)
         {
             LightMap[num].SetActive(false);
@@ -161,7 +193,14 @@ public class Map : MonoBehaviour
             LW = true;
 
         }
-        //Player_Controller.ChangeMapActive = false;
+        EventCenter.GetInstance().EventTrigger("IChangeB", MapNum.Start_Num);
+
+        var types = GameObject.FindObjectsOfType<Ice>();
+        foreach (var item in types)
+        {
+            item.CanChange = true;
+        }
+
     }
    
     //key为场景值。第一关为0，第二关为1
@@ -182,6 +221,20 @@ public class Map : MonoBehaviour
         Destroy(DoubleMap[nextnum]);
         Destroy(DarkMap[nextnum]);
         Destroy(GameObject.FindGameObjectWithTag("Point"));
+
+        var BlockTran = GameObject.FindObjectsOfType<IceBlock>();
+        foreach (var item in BlockTran)
+        {
+            EventCenter.GetInstance().RomoveEventListener("BChangeI", item.BChangeI);
+            Debug.Log("清除了监听");
+        }
+        var IceTran = GameObject.FindObjectsOfType<Ice>();
+        foreach (var item in IceTran)
+        {
+            EventCenter.GetInstance().RomoveEventListener("IChangeB", item.IChangeB);
+            Debug.Log("清除了监听");
+        }
+
         LightMap[nextnum] = PoolMgr.GetInstance().GetObjAsyc(LightWorld[nextnum], new Vector3(0, 0, 0), Quaternion.identity);
         DoubleMap[nextnum] = PoolMgr.GetInstance().GetObjAsyc(DoubleWorld[nextnum], new Vector3(0, 0, 0), Quaternion.identity);
         num = 0;
@@ -189,20 +242,17 @@ public class Map : MonoBehaviour
         {
             DarkMap[nextnum] = obj;
             DarkMap[nextnum].SetActive(false);
-
         });
 
 
     }
-
-
     public void DestroyListener()
     {
         EventCenter.GetInstance().RomoveEventListener("InitMap", InitWorld);
         EventCenter.GetInstance().RomoveEventListener("RestartGame", RestartGame);
         EventCenter.GetInstance().RomoveEventListener("ChangeMap", ChangeMap);
         EventCenter.GetInstance().RomoveEventListener("ChangeWorld", ChangeWorld);
-        EventCenter.GetInstance().RomoveEventListener("ChangeWorld", IBClass.ChangeChild);
+        //EventCenter.GetInstance().RomoveEventListener("ChangeWorld", IBClass.ChangeChild);
         EventCenter.GetInstance().RomoveEventListener("fail", RestartGame);
         
     }

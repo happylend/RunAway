@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class MapNum : MonoBehaviour
 {
 
-    public static int Start_Num;//初始关卡
+    public static int Start_Num = 0;//初始关卡
 
     static bool isHaveClone = false;
 

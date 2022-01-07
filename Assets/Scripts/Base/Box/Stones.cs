@@ -5,6 +5,7 @@ using UnityEngine;
 public class Stones : BoxFather
 {
 
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -14,7 +15,10 @@ public class Stones : BoxFather
     // Update is called once per frame
     void Update()
     {
-        NewMove(Player_Controller.Ignorelayer);
+        NewMove(Player_Controller.RestartLayer);
+        //滑冰
+        if (canSkate()) SkateInit();
+        SkateMove();
     }
     private void LateUpdate()
     {
