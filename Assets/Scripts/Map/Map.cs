@@ -169,7 +169,6 @@ public class Map : MonoBehaviour
     {
         int num = (int)key;
         MapNum.Start_Num = num;
-        EventCenter.GetInstance().EventTrigger("BChangeI", MapNum.Start_Num);
         if (LW)
         {
             LightMap[num].SetActive(false);
@@ -193,12 +192,15 @@ public class Map : MonoBehaviour
             LW = true;
 
         }
-        EventCenter.GetInstance().EventTrigger("IChangeB", MapNum.Start_Num);
-
-        var types = GameObject.FindObjectsOfType<Ice>();
-        foreach (var item in types)
+        if (num == 7 || num == 8)
         {
-            item.CanChange = true;
+            EventCenter.GetInstance().EventTrigger("IChangeB", MapNum.Start_Num);
+
+            var types = GameObject.FindObjectsOfType<Ice>();
+            foreach (var item in types)
+            {
+                item.CanChange = true;
+            }
         }
 
     }
@@ -216,24 +218,30 @@ public class Map : MonoBehaviour
         Treasure.Iswin = false;
 
         int nextnum = (int)key;
+        if (nextnum == 7 || nextnum == 8)
+        {
+            var BlockTran = GameObject.FindObjectsOfType<IceBlock>();
+            foreach (var item in BlockTran)
+            {
+                EventCenter.GetInstance().RomoveEventListener("BChangeI", item.BChangeI);
+                Debug.Log("清除了监听");
+            }
+            var IceTran = GameObject.FindObjectsOfType<Ice>();
+            foreach (var item in IceTran)
+            {
+                EventCenter.GetInstance().RomoveEventListener("IChangeB", item.IChangeB);
+                Debug.Log("清除了监听");
+            }
+        }
         PoolMgr.GetInstance().Clear();
+
+
         Destroy(LightMap[nextnum]);
         Destroy(DoubleMap[nextnum]);
         Destroy(DarkMap[nextnum]);
         Destroy(GameObject.FindGameObjectWithTag("Point"));
 
-        var BlockTran = GameObject.FindObjectsOfType<IceBlock>();
-        foreach (var item in BlockTran)
-        {
-            EventCenter.GetInstance().RomoveEventListener("BChangeI", item.BChangeI);
-            Debug.Log("清除了监听");
-        }
-        var IceTran = GameObject.FindObjectsOfType<Ice>();
-        foreach (var item in IceTran)
-        {
-            EventCenter.GetInstance().RomoveEventListener("IChangeB", item.IChangeB);
-            Debug.Log("清除了监听");
-        }
+
 
         LightMap[nextnum] = PoolMgr.GetInstance().GetObjAsyc(LightWorld[nextnum], new Vector3(0, 0, 0), Quaternion.identity);
         DoubleMap[nextnum] = PoolMgr.GetInstance().GetObjAsyc(DoubleWorld[nextnum], new Vector3(0, 0, 0), Quaternion.identity);
@@ -252,7 +260,6 @@ public class Map : MonoBehaviour
         EventCenter.GetInstance().RomoveEventListener("RestartGame", RestartGame);
         EventCenter.GetInstance().RomoveEventListener("ChangeMap", ChangeMap);
         EventCenter.GetInstance().RomoveEventListener("ChangeWorld", ChangeWorld);
-        //EventCenter.GetInstance().RomoveEventListener("ChangeWorld", IBClass.ChangeChild);
         EventCenter.GetInstance().RomoveEventListener("fail", RestartGame);
         
     }

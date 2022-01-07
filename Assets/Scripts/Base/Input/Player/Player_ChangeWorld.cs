@@ -16,7 +16,9 @@ public class Player_ChangeWorld : StateBase<PlayerState>
     {
         Map.MapComplete = false;
         //检测世界转换
+        EventCenter.GetInstance().EventTrigger("BChangeI", MapNum.Start_Num);
         EventCenter.GetInstance().EventTrigger("ChangeWorld", MapNum.Start_Num);
+
     }
 
     public override void OnExit(){

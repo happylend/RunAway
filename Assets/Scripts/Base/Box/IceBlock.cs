@@ -9,17 +9,11 @@ public class IceBlock : BoxFather
 
     // Start is called before the first frame update
 
-    public void OnEnable()
+
+    private void Start()
     {
         Init(BoxType.IceBlock, gameObject);
-        
-    }
-
-    private void Awake()
-    {
         EventCenter.GetInstance().AddEventListener("BChangeI", BChangeI);
-
-      
     }
     // Update is called once per frame
     void Update()
@@ -63,7 +57,7 @@ public class IceBlock : BoxFather
 
                     EventCenter.GetInstance().RomoveEventListener("BChangeI", BChangeI);
                     //销毁地块 和 自己
-                    Destroy(gameObject);
+                    gameObject.SetActive(false);
                 }
             }
         }

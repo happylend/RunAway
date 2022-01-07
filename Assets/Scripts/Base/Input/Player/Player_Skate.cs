@@ -80,6 +80,11 @@ public class Player_Skate : StateBase<PlayerState>
         if(TargetPos != Vector3.zero)
         {
             Player.transform.position = Vector3.MoveTowards(Player.transform.position, TargetPos, 5f * Time.deltaTime);
+            if(!Physics.Raycast(Player.Tran(),Vector3.down,1f,Player_Controller.RestartLayer))
+            {
+                TargetPos = Player_Controller.RoundV(Player.Tran());
+                Isfall = true;
+            }
             if(Vector3.Distance(Player.transform.position, TargetPos)<0.15f)
             {
                 Debug.Log("目标是+" + TargetPos);

@@ -64,7 +64,7 @@ public class Ice : MonoBehaviour
                     EventCenter.GetInstance().RomoveEventListener("IChangeB", IChangeB);
                     IceBlockF = GameObject.FindWithTag("IceBlock").transform;
                     IceBlock.transform.parent = IceBlockF;
-                    Destroy(this.gameObject);
+                    gameObject.SetActive(false);
                 }
             }
         }
