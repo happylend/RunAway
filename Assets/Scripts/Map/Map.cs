@@ -261,6 +261,18 @@ public class Map : MonoBehaviour
         EventCenter.GetInstance().RomoveEventListener("ChangeMap", ChangeMap);
         EventCenter.GetInstance().RomoveEventListener("ChangeWorld", ChangeWorld);
         EventCenter.GetInstance().RomoveEventListener("fail", RestartGame);
-        
+        var BlockTran = GameObject.FindObjectsOfType<IceBlock>();
+        foreach (var item in BlockTran)
+        {
+            EventCenter.GetInstance().RomoveEventListener("BChangeI", item.BChangeI);
+            Debug.Log("清除了监听");
+        }
+        var IceTran = GameObject.FindObjectsOfType<Ice>();
+        foreach (var item in IceTran)
+        {
+            EventCenter.GetInstance().RomoveEventListener("IChangeB", item.IChangeB);
+            Debug.Log("清除了监听");
+        }
+
     }
 }

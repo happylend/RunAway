@@ -19,7 +19,9 @@ public enum PlayerState
     //吹风机
     Player_Blow,
     //滑冰
-    Player_Skate
+    Player_Skate,
+    //推箱子
+    Player_Push
 }
 
 public class Player_Controller : FSMController<PlayerState>
@@ -43,6 +45,7 @@ public class Player_Controller : FSMController<PlayerState>
     public new Player_Audio audio { get; private set; }
 
     public static bool Win;
+    public static bool Push;
 
     public CharacterController characterController { get; private set; }
 
@@ -127,6 +130,7 @@ public class Player_Controller : FSMController<PlayerState>
 
     }
 
+    
     
 
 }

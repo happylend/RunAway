@@ -16,12 +16,13 @@ public class IceBlock : BoxFather
         EventCenter.GetInstance().AddEventListener("BChangeI", BChangeI);
     }
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         NewMove(Player_Controller.RestartLayer);
         if (canSkate()) SkateInit();
         SkateMove();
     }
+
 
     private void LateUpdate()
     {
@@ -57,7 +58,9 @@ public class IceBlock : BoxFather
 
                     EventCenter.GetInstance().RomoveEventListener("BChangeI", BChangeI);
                     //销毁地块 和 自己
+                    obj.SetActive(false);
                     gameObject.SetActive(false);
+                    
                 }
             }
         }

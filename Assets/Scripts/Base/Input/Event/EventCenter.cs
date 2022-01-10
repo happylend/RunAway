@@ -35,7 +35,7 @@ public class EventCenter : BaseManager<EventCenter>
         {
             eventDic.Add(name, action);
         }
-        Debug.Log("增加了监听" + name);
+        //Debug.Log("增加了监听" + name);
     }
 
     /// <summary>

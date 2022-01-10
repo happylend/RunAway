@@ -19,8 +19,7 @@ public class FireBox:BoxFather
 
     private void LateUpdate()
     {
-        this.Fall(this.gameObject);
-
+        Fall(gameObject);
     }
     private void DecGrass()
     {

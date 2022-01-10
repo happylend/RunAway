@@ -43,14 +43,11 @@ public class Blower : BoxFather
         }
 
     }
-    private void FixedUpdate()
-    {
-
-    }
     private void LateUpdate()
     {
-        Fall(this.gameObject);
+        Fall(gameObject);
     }
+
     /*
     public void DirDective(Vector3 vector)
     {

@@ -28,12 +28,11 @@ public class Treasure:BoxFather
         IsWin();
 
     }
+
     private void LateUpdate()
     {
-        Fall(this.gameObject);
-      
+        Fall(gameObject);
     }
-
     public void IsWin()
     {
         if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit WinHit, 1f))
@@ -47,7 +46,7 @@ public class Treasure:BoxFather
     }
 
     /// <summary>
-    /// 胜利箱子
+    /// 胜利箱子转向
     /// </summary>
     public void WinBox()
     {

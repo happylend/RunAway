@@ -41,6 +41,7 @@ public class SettingControl : MonoBehaviour
         //声效
         music.PlaySound("点击");
         PoolMgr.GetInstance().Clear();
+
         //变换BGM
         MusicMgr.GetInstance().PauseBKMusic();
         MusicMgr.GetInstance().PlayBkMusic("MainMenuBGM");

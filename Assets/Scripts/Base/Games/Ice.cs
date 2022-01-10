@@ -7,7 +7,6 @@ public class Ice : MonoBehaviour
     public Vector3 TargetPos = Vector3.zero;
     public bool CanSkate = false;
     public bool CanChange;
-    //public bool CanChange = true;
     private Transform LightCubeF,IceBlockF, DarkCubeF;
     private void Awake()
     {       
@@ -20,8 +19,19 @@ public class Ice : MonoBehaviour
         {
             Player_Controller.CanSkate = true;
         }
-    
+        if(collision.collider.tag == "Floor")
+        {
+            Transform colliderTran = collision.collider.transform;
+            if (colliderTran.position == transform.position)
+            {
+                colliderTran.gameObject.SetActive(false);
+      
+            }
+
+            
+        } 
     }
+
 
     /// <summary>
     /// 变成冰块

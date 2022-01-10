@@ -14,21 +14,23 @@ public abstract class BoxFather : MonoBehaviour
         Isfall = false;
     }
     */
-    public bool CanMove = true;
+
     public GameObject Box;
+    
     public int BoxLayer;
+    public float Speed = 5f;
 
     public Transform LightCubeF, IceBlockF, DarkCubeF,IceF;
 
+
     public Vector3 TargetPos = Vector3.zero;
-    //public Vector3 SkateTargetPos = Vector3.zero;
     public Vector3 DeDir = Vector3.zero;
     public Vector3 Target;
     public List<Vector3> BaseDir;
 
     public bool CanSkate = false;
     public bool Isfall = false;
-
+    public bool CanMove = true;
 
 
     public enum BoxType
@@ -42,7 +44,9 @@ public abstract class BoxFather : MonoBehaviour
         //吹风机
         Blower,
         //冰块
-        IceBlock
+        IceBlock,
+        //草
+        Grass
     }
 
     public BoxType Boxtype;
@@ -86,27 +90,18 @@ public abstract class BoxFather : MonoBehaviour
     {
         if (DeDir != Vector3.zero && BoxCanMove(DeDir, Ignore) && !CanSkate)
         {
-            Box.transform.position = Vector3.MoveTowards(Box.transform.position, Target, 4f * Time.deltaTime);
+            Box.transform.position = Vector3.MoveTowards(Box.transform.position, Target, Speed * Time.deltaTime);
             if (Vector3.Distance(Box.transform.position, Target) < 0.15f)
             {
+                Debug.Log("方向是+" + DeDir + "被碰的目标是" + Target);
                 Box.transform.position = Target;
-                DeDir = Vector3.zero;          
+                Target = DeDir = Vector3.zero;
+                TargetPos = Vector3.zero;
             }
         }
 
     }
-
-    /// <summary>
-    /// 判断是否坠落
-    /// </summary>
-    /// <returns></returns>
-    public bool CanFall()
-    {
-        if ((Isfall&& Box.transform.position== TargetPos )|| (Box.transform.position == Target))
-            return true;
-        else return false;
-    }
-
+    
     /// <summary>
     /// 坠落函数
     /// </summary>
@@ -116,18 +111,7 @@ public abstract class BoxFather : MonoBehaviour
         
         if (!Physics.Raycast(Box.transform.position, Vector3.down, 1f, Player_Controller.RestartLayer))
         {
-            if (Physics.Raycast(Box.transform.position, Vector3.down, out RaycastHit hit,20f))
-            {
-                var TargetY = hit.transform.position.y;
-                var FallPos = new Vector3(Box.transform.position.x, TargetY-10f, Box.transform.position.z);
-                Box.transform.position = Vector3.Lerp(Box.transform.position, FallPos, 2f * Time.deltaTime);
-            }
-                                 
-            else if(Vector3.Distance(Box.transform.position, Target) < 0.2f)
-            {
-                Box.transform.position = Target;
-                Box.transform.Translate(Vector3.down * 2f * Time.deltaTime);
-            }
+            Box.GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezePositionY;
         }
         else if(Physics.Raycast(Box.transform.position, Vector3.down, 1f, Player_Controller.RestartLayer))
         {
@@ -135,7 +119,7 @@ public abstract class BoxFather : MonoBehaviour
         }
 
     }
-
+    
     /// <summary>
     /// 返回箱子坐标
     /// </summary>
@@ -147,25 +131,17 @@ public abstract class BoxFather : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.tag == "Player"&&collision.collider.tag!="Ice")
+        if(collision.collider.tag == "Player")
         {
-
-            BaseDir = new List<Vector3> { Vector3.forward, Vector3.back, Vector3.right, Vector3.left};
-            Vector3 dir = Box.transform.position - collision.collider.transform.position;
-            dir = Player_Controller.RoundV(dir);
-            //Debug.Log(dir);
-            if (BaseDir.Contains(dir))
-            {
-                DeDir = dir;
-                Target = Box.transform.position + DeDir;
-            }
+            DeDir = Player_Controller.GetDir(Player_Move.dir);
+            Target = Player_Controller.RoundV(Box.transform.position + DeDir);
         }
         else if (collision.collider.tag == "Ice")
         {
+
             CanSkate = true;
         }
     }
-
 
 
     /// <summary>
@@ -187,7 +163,7 @@ public abstract class BoxFather : MonoBehaviour
         if (Physics.Raycast(Box.transform.position, -1*DeDir,0.6f,Player_Controller.IgnoreIceAir))
         {
             Debug.Log("当前箱子的方位是"+DeDir);
-            var CurY = Box.transform.position.y - 0.6f;
+            var CurY = Box.transform.position.y - 1f;
             var curVector = new Vector3(Box.transform.position.x, CurY, Box.transform.position.z);
             if (Physics.Raycast(curVector, DeDir, out RaycastHit hit, 10f, Player_Controller.IgnoreIceAir))
             {
@@ -219,12 +195,12 @@ public abstract class BoxFather : MonoBehaviour
                 {
                     if(Mathf.Abs(DeDir.x) == 1)
                     {
-                        var TargetX = hitt.collider.transform.position.x;
+                        var TargetX = hitt.collider.transform.position.x-DeDir.x;
                         TargetPos = new Vector3(TargetX, Box.transform.position.y, Box.transform.position.z);
                     }
                     else if(Mathf.Abs(DeDir.z) == 1)
                     {
-                        var TargetZ = hitt.collider.transform.position.z;
+                        var TargetZ = hitt.collider.transform.position.z-DeDir.z;
                         TargetPos = new Vector3(Box.transform.position.x, Box.transform.position.y, TargetZ);
                     }
                 }

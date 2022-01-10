@@ -13,24 +13,27 @@ public enum Dir
     right
 }
 
+
+
 public class Player_Move : StateBase<PlayerState>
 {
     Player_Controller Player;
 
   
 
-    private float moveSpeed = 3f;
 
-    private GameObject Box;
+
+    public static GameObject Box;
     private int BoxLayer = Player_Controller.Ignorelayer;
 
     private float CheckLen = 1f;
-
+    private float moveSpeed = 4f;
     //private bool canMove = true;
-    
+
     public static Dir dir;
     public static bool StopInput;
-
+    public Vector3 BoxTarget;
+    
     
     public override void Init(FSMController<PlayerState> controller, PlayerState StateType)
     {
@@ -45,9 +48,7 @@ public class Player_Move : StateBase<PlayerState>
         Player_Controller.CanFall = Player_Controller.CanMove = Player_Controller.CanChangeWorld = true;
         Player_Controller.CanSkate = false;
         StopInput = false;
-
     }
-
     public override void OnExit()
     {
         StopInput = true;
@@ -78,6 +79,7 @@ public class Player_Move : StateBase<PlayerState>
 
         //检测是否下落
         if (Player_Controller.CanFall) Fall();
+
         
         //移动
         if (Player_Controller.CanMove) Move();
@@ -98,20 +100,23 @@ public class Player_Move : StateBase<PlayerState>
         if(Physics.Raycast(Player.transform.position, new Vector3(h, 0, v),out RaycastHit boxhit, 1f, Player_Controller.Ignorelayer))
         {
             //如果不是箱子
-            if(boxhit.transform.tag != "Box")
+            if (boxhit.transform.tag != "Box")
             {
+               
                 Debug.Log("不是箱子");
                 return false;
             }
 
             //如果是箱子
             else
-            {            
+            {
+                
                 //获得箱子
                 Box = boxhit.transform.gameObject;
-                if(Box.TryGetComponent<Treasure>(out Treasure treasure)) BoxLayer = Player_Controller.RestartLayer;
+                if (Box.TryGetComponent<Treasure>(out Treasure treasure)) BoxLayer = Player_Controller.RestartLayer;
+                else if (Box.TryGetComponent<FireBox>(out FireBox fireBox)) BoxLayer = Player_Controller.IgnoreGrass;
                 else BoxLayer = Player_Controller.RestartLayer;
-
+                
                 //箱子前面没有东西
                 if (!Physics.Raycast(Box.transform.position, new Vector3(h, 0, v), 0.7f, BoxLayer))
                 {
@@ -120,14 +125,19 @@ public class Player_Move : StateBase<PlayerState>
                 return false;
             }
         }
+        
         return true; 
     }
-    
+
+
+
+ 
     /// <summary>
     /// 人物移动函数
     /// </summary>
     private void Move()
     {
+
         //Debug.Log("开始调用移动");
         //if (CanMove(Player.input.Horizontal, Player.input.Vertical, Player))
         //{
@@ -141,9 +151,10 @@ public class Player_Move : StateBase<PlayerState>
             }
             else h = v = 0;
 
-            if(Vector3.Distance(Player.transform.position, Player.MovePoint.position)<=.006f)
+            if (Vector3.Distance(Player.transform.position, Player.MovePoint.position)<=.006f)
             {
-                if(Mathf.Abs(h) == 1f && Mathf.Abs(v) == 1)
+                
+                if (Mathf.Abs(h) == 1f && Mathf.Abs(v) == 1)
                 {
                     var a = new System.Random();
                     int Rn = a.Next(0, 2);
@@ -157,16 +168,17 @@ public class Player_Move : StateBase<PlayerState>
                     if (h > 0) dir = Dir.right;
                     else dir = Dir.left;
                     //转向
+                   
                     Player.transform.eulerAngles = new Vector3(0, h * 90f, 0);
                     //移动
                     if (CanMove(Player.input.Horizontal, Player.input.Vertical, Player))
                     {
                         Player.MovePoint.position += new Vector3(h, 0f, 0f);
                         Player.MovePoint.position = Player_Controller.RoundV(Player.MovePoint.position);
+
                         //同步模型动画
                         //Player.model.UpdateMovePar(h, v);
                     }
-
                 }   
                 if (Mathf.Abs(v) == 1f)
                 {
@@ -318,7 +330,7 @@ public class Player_Move : StateBase<PlayerState>
         Player_Controller.CanChangeWorld = false;
         //StopInput = true;
         Player_Controller.CanMove = false;
-        Debug.Log("进入溜冰状态");
+        //Debug.Log("进入溜冰状态");
         Player.ChangeState<Player_Skate>(PlayerState.Player_Skate);
     }
 

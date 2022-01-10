@@ -18,7 +18,7 @@ public class Player_Skate : StateBase<PlayerState>
     public override void OnEnter()
     {
         Isfall = false;
-        var CurY = Player.Tran().y - 0.6f;
+        var CurY = Player.Tran().y - 1f;
         Vector3 curVector = new Vector3(Player.Tran().x, CurY, Player.Tran().z);
         //检测到了前方空地
         if (Physics.Raycast(curVector, Player_Controller.GetDir(Player_Move.dir), out RaycastHit hit, 10f, Player_Controller.IgnoreIceAir))
@@ -27,7 +27,7 @@ public class Player_Skate : StateBase<PlayerState>
             float IceLen = Vector3.Distance(curVector, hit.collider.transform.position);
             Debug.Log("长度是" + IceLen);
             //前方有物体挡住
-            if (Physics.Raycast(Player.transform.position, Player_Controller.GetDir(Player_Move.dir), out RaycastHit hitCod, IceLen))
+            if (Physics.Raycast(Player.transform.position, Player_Controller.GetDir(Player_Move.dir), out RaycastHit hitCod, IceLen, Player_Controller.IgnoreIceAir))
             {
                 Debug.Log("冰路上有障碍");
                 TargetPos = hitCod.transform.position - Player_Controller.GetDir(Player_Move.dir);
@@ -52,11 +52,13 @@ public class Player_Skate : StateBase<PlayerState>
                 {
                     var TargetX = hitt.collider.transform.position.x;
                     TargetPos = new Vector3(TargetX, Player.Tran().y, Player.Tran().z);
+                    Debug.Log("滑向为X");
                 }
                 else if (Mathf.Abs(Player_Controller.GetDir(Player_Move.dir).z) == 1)
                 {
                     var TargetZ = hitt.collider.transform.position.z;
                     TargetPos = new Vector3(Player.Tran().x, Player.Tran().y, TargetZ);
+                    Debug.Log("滑向为X");
                 }
                 else
                 {
@@ -79,13 +81,13 @@ public class Player_Skate : StateBase<PlayerState>
         
         if(TargetPos != Vector3.zero)
         {
-            Player.transform.position = Vector3.MoveTowards(Player.transform.position, TargetPos, 5f * Time.deltaTime);
+            Player.transform.position = Vector3.MoveTowards(Player.transform.position, TargetPos, 8f * Time.deltaTime);
             if(!Physics.Raycast(Player.Tran(),Vector3.down,1f,Player_Controller.RestartLayer))
             {
                 TargetPos = Player_Controller.RoundV(Player.Tran());
                 Isfall = true;
             }
-            if(Vector3.Distance(Player.transform.position, TargetPos)<0.15f)
+            if(Vector3.Distance(Player.transform.position, TargetPos)<0.20f)
             {
                 Debug.Log("目标是+" + TargetPos);
                 Player.MovePoint.position = TargetPos;

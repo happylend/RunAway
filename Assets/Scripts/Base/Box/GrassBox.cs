@@ -2,24 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stones : BoxFather
+public class GrassBox : BoxFather
 {
-
-
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
-        Init(BoxType.Stone,this.gameObject);
+        Init(BoxType.Grass, gameObject);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         NewMove(Player_Controller.RestartLayer);
-        //滑冰
-        if (canSkate()) SkateInit();
-        SkateMove();
     }
-
-
+    private void LateUpdate()
+    {
+        Fall(gameObject);
+    }
 }
