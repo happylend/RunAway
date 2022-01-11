@@ -16,7 +16,8 @@ public class Player_ChangeWorld : StateBase<PlayerState>
     {
         Map.MapComplete = false;
         //检测世界转换
-        EventCenter.GetInstance().EventTrigger("BChangeI", MapNum.Start_Num);
+        if(MapNum.Start_Num == 7|| MapNum.Start_Num == 8)
+            EventCenter.GetInstance().EventTrigger("BChangeI", MapNum.Start_Num);
         EventCenter.GetInstance().EventTrigger("ChangeWorld", MapNum.Start_Num);
 
     }

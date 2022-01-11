@@ -130,7 +130,36 @@ public class Player_Controller : FSMController<PlayerState>
 
     }
 
-    
-    
+    /// <summary>
+    /// 检测胜利
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckWin()
+    {
+        if (Treasure.Iswin)
+        {
+            if (Vector3.Distance(transform.position ,MovePoint.position)<0.15f)
+            {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 检测转换世界
+    /// </summary>
+    /// <returns></returns>
+    public bool canChangeWorld()
+    {
+        RaycastHit raycast;
+        if (Physics.Raycast(transform.position, Vector3.down, out raycast, 1f))
+        {
+            if (raycast.transform.tag == "ChangeWorld" )return true;
+            else return false;
+        }
+        else return false;
+    }
 
 }

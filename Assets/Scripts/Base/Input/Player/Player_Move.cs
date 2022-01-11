@@ -33,8 +33,8 @@ public class Player_Move : StateBase<PlayerState>
     public static Dir dir;
     public static bool StopInput;
     public Vector3 BoxTarget;
-    
-    
+
+    bool canChangeWorld = false;
     public override void Init(FSMController<PlayerState> controller, PlayerState StateType)
     {
         base.Init(controller, StateType);
@@ -57,8 +57,8 @@ public class Player_Move : StateBase<PlayerState>
 
     public override void OnUpdate()
     {
-
-        if (Player_Controller.Win)
+        //胜利监测
+        if(Player.CheckWin())
         {
             Debug.Log("胜利了！");
             GameObject.Destroy(Player.MovePoint.gameObject);
@@ -199,18 +199,21 @@ public class Player_Move : StateBase<PlayerState>
                         Player.MovePoint.position += new Vector3(0f, 0f, v);
                         Player.MovePoint.position = Player_Controller.RoundV(Player.MovePoint.position);
                     }
-                    //同步模型动画
-                    // Player.model.UpdateMovePar(h, v);
+    
                 }
-                //检测胜利
-                if (Treasure.Iswin)
+                //同步模型动画
+                //Player.model.UpdateMovePar(h, v);
+            /*
+            //检测胜利
+            if (Treasure.Iswin)
+            {
+                if (Player.transform.position == Player.MovePoint.position)
                 {
-                    if (Player.transform.position == Player.MovePoint.position)
-                    {
-                        Player_Controller.Win = true;
-                    }
+                    Player_Controller.Win = true;
                 }
             }
+            */
+        }
         //}
         
     }
@@ -239,35 +242,21 @@ public class Player_Move : StateBase<PlayerState>
                 Player.transform.position = Player.MovePoint.position;
                 GameObject.Destroy(GameObject.FindWithTag("Point"));
                 Player.ChangeState<Player_Fall>(PlayerState.Player_Fall);
-
             } 
             
             
         }
     }
 
-    /// <summary>
-    /// 检测转换世界
-    /// </summary>
-    /// <returns></returns>
-    private bool CanChangeWorld()
-    {
-        RaycastHit raycast;
-        if (Physics.Raycast(Player.transform.position, Vector3.down, out raycast, CheckLen))
-        {
-            if (raycast.transform.tag == "ChangeWorld") return true;
-            else return false;
-        }
-        else return false;
-    }
 
     /// <summary>
     /// 转换世界
     /// </summary>
     private void ChangeWorld()
     {
-        if(CanChangeWorld())
+        if(Player.canChangeWorld())
         {
+            Debug.Log("是否是明世界" + Map.LW);
             Player_Controller.CanFall  = Player_Controller.CanBlow = false;
             if (Vector3.Distance(Player.transform.position, Player.MovePoint.position) < 0.15f)
             {

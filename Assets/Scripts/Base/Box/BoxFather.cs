@@ -143,7 +143,18 @@ public abstract class BoxFather : MonoBehaviour
         }
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player"&&!Physics.Raycast(Tran(), Player_Controller.GetDir(Player_Move.dir),0.6f))
+        {
+            DeDir = Player_Controller.GetDir(Player_Move.dir);
+            Target = Player_Controller.RoundV(Tran() + DeDir);
+        }
+        else if (other.tag == "Ice")
+        {
+            CanSkate = true;
+        }
+    }
     /// <summary>
     /// 是否可以滑冰
     /// </summary>

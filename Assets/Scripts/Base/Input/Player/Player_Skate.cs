@@ -17,6 +17,7 @@ public class Player_Skate : StateBase<PlayerState>
 
     public override void OnEnter()
     {
+        
         Isfall = false;
         var CurY = Player.Tran().y - 1f;
         Vector3 curVector = new Vector3(Player.Tran().x, CurY, Player.Tran().z);

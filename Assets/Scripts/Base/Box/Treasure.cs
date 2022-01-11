@@ -6,7 +6,7 @@ public class Treasure:BoxFather
 {
     public static int RestartLayer = ~(1 << 29 | 1 << 28);//忽略重启区域
     public static bool Iswin = false;
-
+    public static bool CanChange = false;
 
     //public Transform MovePoint;
     private void Awake()
@@ -21,6 +21,7 @@ public class Treasure:BoxFather
 
         NewMove(Player_Controller.RestartLayer);
 
+
         //滑冰
         if (canSkate()) SkateInit();
         SkateMove();     
@@ -32,6 +33,7 @@ public class Treasure:BoxFather
     private void LateUpdate()
     {
         Fall(gameObject);
+        
     }
     public void IsWin()
     {
