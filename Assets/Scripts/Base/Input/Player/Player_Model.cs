@@ -7,13 +7,19 @@ using UnityEngine;
 /// </summary>
 public class Player_Model : MonoBehaviour
 {
-    private Player_Controller player;
+    public Player_Controller player;
     private Animator animator;
     // Start is called before the first frame update
     public void Init(Player_Controller player)
     {
         this.player = player;
-        animator = GetComponent<Animator>();
+        //初始完成;
+
+        if(TryGetComponent<Animator>(out Animator Ani))
+        {
+            Debug.Log(Ani);
+            animator = Ani;
+        }
     }
 
     /// <summary>
@@ -23,7 +29,7 @@ public class Player_Model : MonoBehaviour
     /// <param name="v"></param>
     public void UpdateMovePar(float h, float v)
     {
-        animator.SetFloat("Horizontal",h);
+        animator.SetFloat("Horizontal", h);
         animator.SetFloat("Vertical", v);
     }
 }

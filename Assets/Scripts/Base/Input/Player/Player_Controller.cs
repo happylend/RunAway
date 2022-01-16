@@ -37,7 +37,7 @@ public class Player_Controller : FSMController<PlayerState>
 
 
     //public static bool ChangeMapActive = false;
-    public static bool CanBlow, CanMove, CanChangeWorld, CanFall, CanSkate;
+    public static bool CanBlow, CanMove, CanChangeWorld, CanFall, CanSkate, MoveState;
 
     public static Vector3 BlowDir;
 
@@ -62,7 +62,11 @@ public class Player_Controller : FSMController<PlayerState>
         input = new Player_Input();
         audio = new Player_Audio(GetComponent<AudioSource>());
         
-        model = GameObject.Find("Model").GetComponent<Player_Model>();
+        if(GameObject.FindWithTag("Model").TryGetComponent<Player_Model>(out Player_Model _Model))
+        {
+
+            model = _Model;
+        }
         model.Init(this);
         Win = false;
 

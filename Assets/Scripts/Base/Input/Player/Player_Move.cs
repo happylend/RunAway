@@ -34,7 +34,6 @@ public class Player_Move : StateBase<PlayerState>
     public static bool StopInput;
     public Vector3 BoxTarget;
 
-    bool canChangeWorld = false;
     public override void Init(FSMController<PlayerState> controller, PlayerState StateType)
     {
         base.Init(controller, StateType);
@@ -45,44 +44,54 @@ public class Player_Move : StateBase<PlayerState>
     // Start is called before the first frame update
     public override void OnEnter() 
     {
-        Player_Controller.CanFall = Player_Controller.CanMove = Player_Controller.CanChangeWorld = true;
+        Player_Controller.CanFall = Player_Controller.CanMove = Player_Controller.CanChangeWorld = Player_Controller.MoveState = true;
         Player_Controller.CanSkate = false;
         StopInput = false;
     }
     public override void OnExit()
     {
+        Player_Controller.MoveState = false;
         StopInput = true;
         Player_Controller.CanMove = false;
     }
 
     public override void OnUpdate()
     {
-        //胜利监测
-        if(Player.CheckWin())
+        if(Player_Controller.MoveState)
         {
-            Debug.Log("胜利了！");
-            GameObject.Destroy(Player.MovePoint.gameObject);
-            GameObject.Destroy(GameObject.Find("BoxName"));
-            StopInput = true;
-            if (Vector3.Distance(Player.transform.position, Player.MovePoint.position) < 0.2f)
+            //胜利监测
+            if (Player.CheckWin())
             {
-                Player.ChangeState<Player_Win>(PlayerState.Player_Win);
+                Debug.Log("胜利了！");
+                GameObject.Destroy(Player.MovePoint.gameObject);
+                GameObject.Destroy(GameObject.Find("BoxName"));
+                StopInput = true;
+                if (Vector3.Distance(Player.transform.position, Player.MovePoint.position) < 0.2f)
+                {
+                    Player.ChangeState<Player_Win>(PlayerState.Player_Win);
+                }
+            }
+            //监测滑冰
+            if (CanSkate()) Skate();
+
+            //检测是否能飞走
+            Blow();
+            //检测切换世界
+            if (Player_Controller.CanChangeWorld) ChangeWorld();
+
+            //检测是否下落
+            if (Player_Controller.CanFall) Fall();
+
+
+            //移动
+            if (Player_Controller.CanMove)
+            {
+                float h = Player.input.Horizontal;
+                float v = Player.input.Vertical;
+                Move(h, v);
             }
         }
-        //监测滑冰
-        if (CanSkate()) Skate();
-        
-        //检测是否能飞走
-        Blow();
-        //检测切换世界
-        if (Player_Controller.CanChangeWorld) ChangeWorld();
 
-        //检测是否下落
-        if (Player_Controller.CanFall) Fall();
-
-        
-        //移动
-        if (Player_Controller.CanMove) Move();
     }
     /// <summary>
     /// 判断r人物是否可以移动
@@ -135,21 +144,19 @@ public class Player_Move : StateBase<PlayerState>
     /// <summary>
     /// 人物移动函数
     /// </summary>
-    private void Move()
+    private void Move(float h, float v)
     {
 
         //Debug.Log("开始调用移动");
         //if (CanMove(Player.input.Horizontal, Player.input.Vertical, Player))
         //{
-            float h, v;
+
             Player.transform.position = Vector3.MoveTowards(Player.transform.position, Player.MovePoint.position, moveSpeed * Time.deltaTime);
 
-            if (!StopInput)
+            if (StopInput)
             {
-                h = Player.input.Horizontal;
-                v = Player.input.Vertical;
+                h = v = 0;
             }
-            else h = v = 0;
 
             if (Vector3.Distance(Player.transform.position, Player.MovePoint.position)<=.006f)
             {
@@ -177,7 +184,6 @@ public class Player_Move : StateBase<PlayerState>
                         Player.MovePoint.position = Player_Controller.RoundV(Player.MovePoint.position);
 
                         //同步模型动画
-                        //Player.model.UpdateMovePar(h, v);
                     }
                 }   
                 if (Mathf.Abs(v) == 1f)
@@ -201,21 +207,9 @@ public class Player_Move : StateBase<PlayerState>
                     }
     
                 }
-                //同步模型动画
-                //Player.model.UpdateMovePar(h, v);
-            /*
-            //检测胜利
-            if (Treasure.Iswin)
-            {
-                if (Player.transform.position == Player.MovePoint.position)
-                {
-                    Player_Controller.Win = true;
-                }
+            
             }
-            */
-        }
-        //}
-        
+            Player.model.UpdateMovePar(h, v);
     }
    
     /// <summary>
@@ -240,11 +234,11 @@ public class Player_Move : StateBase<PlayerState>
             if (Vector3.Distance(Player.transform.position, Player.MovePoint.position) < 0.15f)
             {
                 Player.transform.position = Player.MovePoint.position;
+                Player_Controller.CanMove = false;
                 GameObject.Destroy(GameObject.FindWithTag("Point"));
                 Player.ChangeState<Player_Fall>(PlayerState.Player_Fall);
             } 
-            
-            
+                      
         }
     }
 

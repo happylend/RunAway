@@ -25,6 +25,7 @@ TagManager:
   - Blows
   - IceBlocks
   - breakIce
+  - Model
   layers:
   - Default
   - TransparentFX
